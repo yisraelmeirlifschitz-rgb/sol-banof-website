@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>אחוזת סול בנוף | שדות מיכה</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Heebo:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wood: #8B5E3C;
+      --wood-light: #C49A6C;
+      --wood-pale: #F0E6D3;
+      --green-deep: #3D5C3A;
+      --green-mid: #5C7A57;
+      --cream: #FAF6EF;
+      --cream-dark: #EDE5D5;
+      --charcoal: #1E1E1E;
+      --text-mid: #4A4035;
+      --text-light: #7A6E60;
+      --white: #FFFFFF;
+      --yellow: #E8B84B;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Heebo', sans-serif; background: var(--cream); color: var(--charcoal); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; right: 0; left: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(250,246,239,0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(139,94,60,0.15);
+      transition: padding 0.4s;
+    }
+    nav.compact { padding: 12px 48px; box-shadow: 0 2px 20px rgba(0,0,0,0.07); }
+    .logo { font-family:'Frank Ruhl Libre',serif; font-size:1.55rem; font-weight:700; color:var(--green-deep); text-decoration:none; }
+    .logo span { color: var(--wood); }
+    .nav-links { display:flex; gap:28px; list-style:none; }
+    .nav-links a { font-size:0.87rem; font-weight:500; color:var(--text-mid); text-decoration:none; transition:color 0.25s; }
+    .nav-links a:hover { color:var(--green-deep); }
+    .nav-phone { background:var(--green-deep) !important; color:var(--white) !important; padding:9px 20px; border-radius:3px; font-weight:600 !important; transition:background 0.25s !important; }
+    .nav-phone:hover { background:var(--green-mid) !important; }
+
+    /* HERO */
+    .hero { min-height:100vh; position:relative; display:flex; align-items:flex-end; padding-bottom:90px; overflow:hidden; }
+    .hero-bg {
+      position:absolute; inset:0;
+      background: url('images/pool-night.jpg') center/cover no-repeat;
+      transform:scale(1.06);
+      animation: zIn 7s ease-out forwards;
+    }
+    .hero-bg::after {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(to top, rgba(10,8,4,0.78) 0%, rgba(10,8,4,0.2) 55%, transparent 100%);
+    }
+    @keyframes zIn { from{transform:scale(1.06)} to{transform:scale(1)} }
+    .hero-content { position:relative; z-index:2; max-width:1200px; margin:0 auto; padding:0 48px; width:100%; }
+    .hero-badge {
+      display:inline-block; margin-bottom:20px;
+      background:rgba(232,184,75,0.16); border:1px solid rgba(232,184,75,0.45);
+      color:var(--yellow); font-size:0.7rem; font-weight:600; letter-spacing:0.22em;
+      text-transform:uppercase; padding:6px 16px; border-radius:2px;
+      opacity:0; animation: up 0.9s 0.3s ease forwards;
+    }
+    .hero-title {
+      font-family:'Frank Ruhl Libre',serif;
+      font-size:clamp(3rem,7.5vw,6.8rem); font-weight:900; line-height:1.0;
+      color:var(--white); margin-bottom:18px;
+      opacity:0; animation: up 0.9s 0.5s ease forwards;
+    }
+    .hero-title em { color:var(--yellow); font-style:normal; }
+    .hero-sub {
+      font-size:1.05rem; font-weight:300; color:rgba(255,255,255,0.78);
+      line-height:1.75; max-width:540px; margin-bottom:40px;
+      opacity:0; animation: up 0.9s 0.7s ease forwards;
+    }
+    .hero-ctas { display:flex; gap:14px; flex-wrap:wrap; opacity:0; animation: up 0.9s 0.9s ease forwards; }
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:13px 34px; font-size:0.9rem; font-weight:600; letter-spacing:0.04em; text-decoration:none; border:none; cursor:pointer; border-radius:3px; transition:all 0.28s; }
+    .btn-green { background:var(--green-deep); color:var(--white); }
+    .btn-green:hover { background:var(--green-mid); transform:translateY(-2px); box-shadow:0 8px 24px rgba(61,92,58,0.4); }
+    .btn-ghost { background:transparent; color:var(--white); border:1.5px solid rgba(255,255,255,0.5); }
+    .btn-ghost:hover { background:rgba(255,255,255,0.1); border-color:var(--white); }
+
+    /* STRIP */
+    .strip { background:var(--green-deep); display:grid; grid-template-columns:repeat(4,1fr); }
+    .strip-item { padding:32px 20px; text-align:center; border-left:1px solid rgba(255,255,255,0.1); transition:background 0.3s; }
+    .strip-item:last-child { border:none; }
+    .strip-item:hover { background:rgba(255,255,255,0.06); }
+    .s-icon { font-size:1.5rem; margin-bottom:7px; display:block; }
+    .s-num { font-family:'Frank Ruhl Libre',serif; font-size:1.9rem; font-weight:700; color:var(--yellow); display:block; line-height:1; }
+    .s-lbl { font-size:0.76rem; color:rgba(255,255,255,0.62); letter-spacing:0.04em; margin-top:4px; display:block; }
+
+    /* SHARED */
+    .eyebrow { font-size:0.7rem; font-weight:600; letter-spacing:0.26em; text-transform:uppercase; color:var(--wood); display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+    .eyebrow::before { content:''; display:block; width:26px; height:1.5px; background:var(--wood-light); }
+    h2 { font-family:'Frank Ruhl Libre',serif; font-size:clamp(2rem,4vw,3.1rem); font-weight:700; color:var(--charcoal); line-height:1.15; margin-bottom:18px; }
+    h2 span { color:var(--green-deep); }
+    .body-text { font-size:0.97rem; font-weight:300; color:var(--text-light); line-height:1.9; }
+
+    /* ABOUT */
+    .about { max-width:1200px; margin:0 auto; padding:110px 48px; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .about-imgs { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .about-imgs img { width:100%; object-fit:cover; border-radius:4px; display:block; }
+    .about-imgs img.big { grid-column:span 2; height:280px; }
+    .about-imgs img.small { height:195px; }
+    .about-list { margin-top:28px; display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+    .a-item { display:flex; align-items:center; gap:9px; font-size:0.87rem; color:var(--text-mid); }
+    .a-item::before { content:'✓'; color:var(--green-deep); font-weight:700; font-size:0.8rem; }
+
+    /* AMENITIES */
+    .amenities { background:var(--cream-dark); padding:100px 48px; }
+    .amenities-inner { max-width:1200px; margin:0 auto; }
+    .amen-header { text-align:center; margin-bottom:56px; }
+    .amen-header .eyebrow { justify-content:center; }
+    .amen-header .eyebrow::before { display:none; }
+    .amen-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .amen-card { background:var(--white); padding:32px 26px; border-radius:4px; border:1px solid rgba(139,94,60,0.09); transition:all 0.3s; }
+    .amen-card:hover { border-color:var(--green-mid); transform:translateY(-4px); box-shadow:0 12px 36px rgba(61,92,58,0.1); }
+    .amen-icon { font-size:2rem; margin-bottom:13px; display:block; }
+    .amen-card h3 { font-family:'Frank Ruhl Libre',serif; font-size:1.15rem; font-weight:600; color:var(--charcoal); margin-bottom:9px; }
+    .amen-card p { font-size:0.84rem; font-weight:300; color:var(--text-light); line-height:1.75; }
+
+    /* GALLERY */
+    .gallery { padding:100px 48px; max-width:1400px; margin:0 auto; }
+    .gal-header { text-align:center; margin-bottom:48px; }
+    .gal-header .eyebrow { justify-content:center; }
+    .gal-header .eyebrow::before { display:none; }
+    .mosaic { display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:200px; gap:8px; }
+    .gp { overflow:hidden; border-radius:4px; cursor:pointer; position:relative; }
+    .gp.t2 { grid-row:span 2; }
+    .gp.w2 { grid-column:span 2; }
+    .gp img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease; display:block; }
+    .gp:hover img { transform:scale(1.07); }
+    .gp::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(20,14,6,0.3),transparent); opacity:0; transition:opacity 0.3s; }
+    .gp:hover::after { opacity:1; }
+
+    /* ROOMS */
+    .rooms { background:var(--green-deep); padding:100px 48px; }
+    .rooms-inner { max-width:1200px; margin:0 auto; }
+    .rooms-header { text-align:center; margin-bottom:56px; }
+    .rooms-header .eyebrow { justify-content:center; color:var(--yellow); }
+    .rooms-header .eyebrow::before { background:rgba(232,184,75,0.5); }
+    .rooms-header h2 { color:var(--white); }
+    .rooms-header h2 span { color:var(--yellow); }
+    .rooms-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .room-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:4px; overflow:hidden; transition:all 0.3s; }
+    .room-card:hover { background:rgba(255,255,255,0.1); border-color:rgba(232,184,75,0.4); transform:translateY(-4px); }
+    .room-card img { width:100%; height:220px; object-fit:cover; display:block; }
+    .room-body { padding:22px 20px; }
+    .room-name { font-family:'Frank Ruhl Libre',serif; font-size:1.15rem; font-weight:600; color:var(--white); margin-bottom:8px; }
+    .room-desc { font-size:0.83rem; font-weight:300; color:rgba(255,255,255,0.62); line-height:1.75; }
+    .room-tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+    .room-tag { background:rgba(232,184,75,0.13); color:var(--yellow); font-size:0.71rem; font-weight:600; padding:4px 10px; border-radius:20px; border:1px solid rgba(232,184,75,0.28); }
+
+    /* OUTDOOR */
+    .outdoor { padding:100px 48px; max-width:1200px; margin:0 auto; }
+    .outdoor-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+    .outdoor-imgs { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .outdoor-imgs img { width:100%; object-fit:cover; border-radius:4px; display:block; }
+    .outdoor-imgs img.bi { grid-column:span 2; height:270px; }
+    .outdoor-imgs img.sm { height:200px; }
+    .feats { margin-top:28px; display:flex; flex-direction:column; gap:12px; }
+    .feat { display:flex; align-items:flex-start; gap:14px; padding:15px 17px; background:var(--cream-dark); border-radius:3px; border-right:3px solid var(--green-deep); }
+    .feat-icon { font-size:1.4rem; flex-shrink:0; margin-top:1px; }
+    .feat-text strong { font-size:0.88rem; font-weight:600; color:var(--charcoal); display:block; margin-bottom:2px; }
+    .feat-text span { font-size:0.81rem; font-weight:300; color:var(--text-light); }
+
+    /* NOTES */
+    .notes { background:var(--wood-pale); padding:70px 48px; }
+    .notes-inner { max-width:1000px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:18px; text-align:center; }
+    .note { padding:28px 20px; background:var(--white); border-radius:4px; border-top:3px solid var(--wood); }
+    .note-icon { font-size:1.8rem; margin-bottom:11px; }
+    .note-title { font-family:'Frank Ruhl Libre',serif; font-size:1.05rem; font-weight:700; color:var(--charcoal); margin-bottom:7px; }
+    .note-text { font-size:0.82rem; font-weight:300; color:var(--text-light); line-height:1.75; }
+
+    /* CONTACT */
+    .contact { padding:100px 48px; max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .contact-img { position:relative; }
+    .contact-img img { width:100%; height:480px; object-fit:cover; border-radius:4px; }
+    .contact-img::before { content:''; position:absolute; top:-14px; right:-14px; width:100%; height:100%; border:2px solid var(--wood-light); border-radius:4px; z-index:-1; }
+    .contact-body .body-text { margin-bottom:36px; }
+    .contact-opts { display:flex; flex-direction:column; gap:12px; }
+    .c-opt { display:flex; align-items:center; gap:16px; padding:18px 20px; background:var(--cream-dark); border-radius:4px; text-decoration:none; color:inherit; border:1px solid transparent; transition:all 0.3s; }
+    .c-opt:hover { border-color:var(--green-deep); background:var(--white); transform:translateX(-4px); }
+    .c-opt-icon { font-size:1.5rem; flex-shrink:0; }
+    .c-opt-lbl { font-size:0.69rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--wood); margin-bottom:3px; }
+    .c-opt-val { font-family:'Frank Ruhl Libre',serif; font-size:1.12rem; font-weight:600; color:var(--charcoal); }
+    .checkin { display:flex; gap:14px; margin-top:28px; }
+    .ci-box { flex:1; padding:15px; background:var(--green-deep); border-radius:3px; text-align:center; }
+    .ci-lbl { font-size:0.66rem; letter-spacing:0.12em; color:rgba(255,255,255,0.58); text-transform:uppercase; margin-bottom:4px; }
+    .ci-val { font-family:'Frank Ruhl Libre',serif; font-size:1.4rem; font-weight:700; color:var(--yellow); }
+
+    /* FOOTER */
+    footer { background:var(--charcoal); padding:38px 48px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .f-logo { font-family:'Frank Ruhl Libre',serif; font-size:1.15rem; color:var(--wood-light); font-weight:500; }
+    .f-copy { font-size:0.77rem; color:rgba(255,255,255,0.35); }
+    .f-note { font-size:0.77rem; color:rgba(255,255,255,0.38); }
+
+    /* ANIMATIONS */
+    @keyframes up { from{opacity:0;transform:translateY(26px)} to{opacity:1;transform:translateY(0)} }
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.in { opacity:1; transform:none; }
+
+    /* MOBILE */
+    @media(max-width:768px){
+      nav{padding:14px 20px;}
+      .nav-links{display:none;}
+      .hero-content{padding:0 20px;}
+      .hero-title{font-size:clamp(2.5rem,10vw,4rem);}
+      .strip{grid-template-columns:repeat(2,1fr);}
+      .strip-item:nth-child(2){border-left:none;}
+      .about{grid-template-columns:1fr;padding:70px 20px;gap:40px;}
+      .amenities{padding:70px 20px;}
+      .amen-grid{grid-template-columns:1fr;}
+      .gallery{padding:70px 20px;}
+      .mosaic{grid-template-columns:1fr 1fr;}
+      .gp.w2{grid-column:span 2;}
+      .rooms{padding:70px 20px;}
+      .rooms-grid{grid-template-columns:1fr;}
+      .outdoor{padding:70px 20px;}
+      .outdoor-grid{grid-template-columns:1fr;gap:40px;}
+      .notes{padding:60px 20px;}
+      .notes-inner{grid-template-columns:1fr;}
+      .contact{grid-template-columns:1fr;padding:70px 20px;gap:40px;}
+      .contact-img{display:none;}
+      footer{flex-direction:column;text-align:center;padding:28px 20px;}
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="logo">אחוזת <span>סול</span> בנוף</a>
+  <ul class="nav-links">
+    <li><a href="#about">על האחוזה</a></li>
+    <li><a href="#amenities">מה כלול</a></li>
+    <li><a href="#gallery">גלריה</a></li>
+    <li><a href="#rooms">חדרים</a></li>
+    <li><a href="#contact" class="nav-phone">📞 055-4541494</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">שדות מיכה • נוף להרים • ליד בית שמש</div>
+    <h1 class="hero-title">אחוזת<br><em>סול בנוף</em></h1>
+    <p class="hero-sub">מתחם נופש מטופח ומצוחצח לכל המשפחה — בריכה מחוממת ומקורה, ג'קוזי ספא, חדרים מעוצבים ונוף מרהיב להרים.</p>
+    <div class="hero-ctas">
+      <a href="tel:055-4541494" class="btn btn-green">📞 לתיאום הזמנה</a>
+      <a href="#gallery" class="btn btn-ghost">צפו בגלריה</a>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-item"><span class="s-icon">🏠</span><span class="s-num">וילה</span><span class="s-lbl">1 וילה פרטית</span></div>
+  <div class="strip-item"><span class="s-icon">👥</span><span class="s-num">20</span><span class="s-lbl">אנשים ללינה ואירוע</span></div>
+  <div class="strip-item"><span class="s-icon">🏊</span><span class="s-num">מחוממת</span><span class="s-lbl">בריכה מקורה כל השנה</span></div>
+  <div class="strip-item"><span class="s-icon">⛰️</span><span class="s-num">נוף</span><span class="s-lbl">פנורמי להרים</span></div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-imgs reveal">
+    <img class="big" src="images/pool-day.jpg" alt="בריכת השחייה" />
+    <img class="small" src="images/garden-view.jpg" alt="נוף מהמרפסת" />
+    <img class="small" src="images/garden-night.jpg" alt="החצר בלילה" />
+  </div>
+  <div class="reveal">
+    <p class="eyebrow">ברוכים הבאים</p>
+    <h2>מקום שמרגישים בו <span>בבית</span></h2>
+    <p class="body-text">חופשה נעימה ומלאה בפינוקים ממתינה לכם במתחם "אחוזת סול בנוף" השוכן בישוב שדות מיכה. מתחם הנופש המטופח, הנקי והמצוחצח מציע שירות ברמה גבוהה ביותר, עם כל מה שצריך להנאה מלאה.</p>
+    <p class="body-text" style="margin-top:12px;">מתאים למשפחות, קבוצות, ימי גיבוש, מסיבות יום הולדת, הצעות נישואין ואירועים מיוחדים.</p>
+    <div class="about-list">
+      <div class="a-item">4 חדרי שינה מעוצבים</div>
+      <div class="a-item">עד 20 איש ללינה ולאירוע</div>
+      <div class="a-item">בריכה מחוממת ומקורה</div>
+      <div class="a-item">ג'קוזי ספא זרמים</div>
+      <div class="a-item">מתאים לשומרי שבת</div>
+      <div class="a-item">מקבלים בעלי חיים</div>
+      <div class="a-item">נגישות לנכים</div>
+      <div class="a-item">חניה פרטית בחינם</div>
+      <div class="a-item">אינטרנט אלחוטי</div>
+      <div class="a-item">נוף פנורמי להרים</div>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="amenities" id="amenities">
+  <div class="amenities-inner">
+    <div class="amen-header reveal">
+      <p class="eyebrow">מה כלול</p>
+      <h2>כל מה שצריך <span>לחופשה מושלמת</span></h2>
+    </div>
+    <div class="amen-grid">
+      <div class="amen-card reveal">
+        <span class="amen-icon">🏊‍♂️</span>
+        <h3>בריכת שחייה</h3>
+        <p>בריכה מחוממת ומקורה לכל השנה, מגודרת לבטחון הילדים. מיטות שיזוף ותאורה רומנטית צבעונית לשעות הערב.</p>
+      </div>
+      <div class="amen-card reveal">
+        <span class="amen-icon">🛁</span>
+        <h3>ג'קוזי ספא זרמים</h3>
+        <p>ג'קוזי ספא גדול מפנק מול הנוף, ועוד ג'קוזי אמבט פנימי בתוך אחד החדרים.</p>
+      </div>
+      <div class="amen-card reveal">
+        <span class="amen-icon">🎱</span>
+        <h3>בידור ומשחקים</h3>
+        <p>שולחן סנוקר, שולחן פינג פונג, מערכת שמע, טלוויזיה 50 אינץ', חבילת ערוצים בלוויין.</p>
+      </div>
+      <div class="amen-card reveal">
+        <span class="amen-icon">🍳</span>
+        <h3>מטבח מאובזר</h3>
+        <p>כיריים מגז, מיקרוגל, מקרר, קומקום חשמלי ופלטת שבת. כל מה שצריך לאוכל מבית.</p>
+      </div>
+      <div class="amen-card reveal">
+        <span class="amen-icon">🌿</span>
+        <h3>חצר מדשאה</h3>
+        <p>חצר מרווחת עם מדשאה, ריהוט גן צבעוני, ערסלים, פינות ישיבה מול הנוף ותאורה בערב.</p>
+      </div>
+      <div class="amen-card reveal">
+        <span class="amen-icon">🍖</span>
+        <h3>בר ומנגל</h3>
+        <p>בר חיצוני עם ריהוט גבוה, עמדת מנגל מאובזרת עם כיור. מושלם לאירוח גדול.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gal-header reveal">
+    <p class="eyebrow">תמונות</p>
+    <h2>הציצו <span>אל המתחם</span></h2>
+  </div>
+  <div class="mosaic">
+    <div class="gp t2"><img src="images/pool-night.jpg" alt="בריכה בלילה" /></div>
+    <div class="gp w2"><img src="images/garden-view.jpg" alt="נוף מהגג" /></div>
+    <div class="gp"><img src="images/room-pink1.jpg" alt="חדר שינה" /></div>
+    <div class="gp"><img src="images/jacuzzi-outdoor.jpg" alt="ג'קוזי חיצוני" /></div>
+    <div class="gp"><img src="images/garden-night.jpg" alt="חצר בערב" /></div>
+    <div class="gp t2"><img src="images/pool-flowers.jpg" alt="ליד הבריכה" /></div>
+    <div class="gp"><img src="images/bar.jpg" alt="הבר" /></div>
+    <div class="gp"><img src="images/snooker.jpg" alt="שולחן סנוקר" /></div>
+    <div class="gp w2"><img src="images/garden-seating.jpg" alt="פינת ישיבה" /></div>
+    <div class="gp"><img src="images/bbq.jpg" alt="פינת מנגל" /></div>
+    <div class="gp"><img src="images/living-room.jpg" alt="סלון" /></div>
+    <div class="gp"><img src="images/jacuzzi-night.jpg" alt="ג'קוזי לילה" /></div>
+    <div class="gp"><img src="images/indoor-jacuzzi.jpg" alt="ג'קוזי פנימי" /></div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section class="rooms" id="rooms">
+  <div class="rooms-inner">
+    <div class="rooms-header reveal">
+      <p class="eyebrow">חדרים</p>
+      <h2>4 חדרי שינה <span>מעוצבים</span></h2>
+    </div>
+    <div class="rooms-grid">
+      <div class="room-card reveal">
+        <img src="images/room-pink2.jpg" alt="סוויטה ורודה" />
+        <div class="room-body">
+          <div class="room-name">סוויטה רומנטית ורודה</div>
+          <p class="room-desc">חדר עם קירות עץ חמים, מיטה זוגית קלאסית עם ראש מרופד, מיזוג ומטבחון אישי.</p>
+          <div class="room-tags"><span class="room-tag">מיטה זוגית</span><span class="room-tag">מיזוג</span><span class="room-tag">מטבחון</span></div>
+        </div>
+      </div>
+      <div class="room-card reveal">
+        <img src="images/room-blue.jpg" alt="חדר כחול" />
+        <div class="room-body">
+          <div class="room-name">חדר כחול</div>
+          <p class="room-desc">מיטה פרנסית מיוחדת, שולחן עגול עם כסאות ראטן כחולים, מיזוג ומקרר.</p>
+          <div class="room-tags"><span class="room-tag">מיטה זוגית</span><span class="room-tag">מיזוג</span><span class="room-tag">מקרר</span></div>
+        </div>
+      </div>
+      <div class="room-card reveal">
+        <img src="images/room-pink1.jpg" alt="סוויטה עם ג'קוזי" />
+        <div class="room-body">
+          <div class="room-name">סוויטה עם ג'קוזי פנימי</div>
+          <p class="room-desc">הסוויטה המיוחדת ביותר — ג'קוזי אמבט פנימי, קירות עץ, מיטה זוגית ומטבחון.</p>
+          <div class="room-tags"><span class="room-tag">ג'קוזי פנימי</span><span class="room-tag">מיטה זוגית</span><span class="room-tag">מטבחון</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTDOOR -->
+<section class="outdoor">
+  <div class="outdoor-grid">
+    <div class="reveal">
+      <p class="eyebrow">החוץ והחצר</p>
+      <h2>חצר <span>מהחלומות</span></h2>
+      <p class="body-text">החצר של אחוזת סול בנוף היא מרכז הפעולה — רחבה, ירוקה ומוארת בקסם בשעות הערב. פינות ישיבה מגוונות, ריהוט גן צבעוני ונוף פנורמי להרים שלא נגמר.</p>
+      <div class="feats">
+        <div class="feat"><span class="feat-icon">🌅</span><div class="feat-text"><strong>נוף פנורמי להרים</strong><span>מראה עוצר נשימה לכל שעות היום והלילה</span></div></div>
+        <div class="feat"><span class="feat-icon">💡</span><div class="feat-text"><strong>תאורה רומנטית צבעונית</strong><span>הבריכה והחצר מוארות יפהפייה בשעות הלילה</span></div></div>
+        <div class="feat"><span class="feat-icon">🎊</span><div class="feat-text"><strong>מתאים לאירועים מיוחדים</strong><span>ימי הולדת, הצעות נישואין, ימי כיף וגיבוש</span></div></div>
+      </div>
+    </div>
+    <div class="outdoor-imgs reveal">
+      <img class="bi" src="images/garden-wide.jpg" alt="מבט רחב על החצר" />
+      <img class="sm" src="images/pingpong.jpg" alt="שולחן פינג פונג" />
+      <img class="sm" src="images/kitchen.jpg" alt="מטבח" />
+    </div>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section class="notes">
+  <div class="notes-inner">
+    <div class="note reveal">
+      <div class="note-icon">🕍</div>
+      <div class="note-title">שומר שבת</div>
+      <p class="note-text">פלטת שבת ומיחם מוכנים. בית כנסת בקרבת מקום. גמישות בשעת יציאה במוצ"ש. ללא מנגל ומוזיקה בשבתות וחגים.</p>
+    </div>
+    <div class="note reveal">
+      <div class="note-icon">📍</div>
+      <div class="note-title">בסביבה</div>
+      <p class="note-text">מסעדות, מסלולי טיולים, טרקטורונים, ג'יפים, רכיבה על סוסים — כולם בקרבת המקום.</p>
+    </div>
+    <div class="note reveal">
+      <div class="note-icon">🐾</div>
+      <div class="note-title">לכולם</div>
+      <p class="note-text">מקבלים בעלי חיים בשמחה. ישנה נגישות מלאה לנכים.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-img reveal">
+    <img src="images/pool-flowers.jpg" alt="אחוזת סול בנוף" />
+  </div>
+  <div class="reveal">
+    <p class="eyebrow">יצירת קשר</p>
+    <h2>בואו <span>נתאם</span> לכם חופשה</h2>
+    <p class="body-text">לבדיקת זמינות, תיאום תאריכים ופרטים נוספים — אנחנו כאן ושמחים לשמוע מכם!</p>
+    <div class="contact-opts">
+      <a href="tel:055-4541494" class="c-opt">
+        <span class="c-opt-icon">📞</span>
+        <div><div class="c-opt-lbl">טלפון</div><div class="c-opt-val">055-4541494</div></div>
+      </a>
+      <a href="https://wa.me/9720554541494" target="_blank" class="c-opt">
+        <span class="c-opt-icon">💬</span>
+        <div><div class="c-opt-lbl">וואטסאפ</div><div class="c-opt-val">שלחו הודעה עכשיו</div></div>
+      </a>
+      <div class="c-opt">
+        <span class="c-opt-icon">📍</span>
+        <div><div class="c-opt-lbl">מיקום</div><div class="c-opt-val">שדות מיכה, אזור בית שמש</div></div>
+      </div>
+    </div>
+    <div class="checkin">
+      <div class="ci-box"><div class="ci-lbl">כניסה</div><div class="ci-val">15:00</div></div>
+      <div class="ci-box"><div class="ci-lbl">יציאה</div><div class="ci-val">11:00</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">אחוזת סול בנוף</div>
+  <div class="f-copy">© 2025 אחוזת סול בנוף | שדות מיכה</div>
+  <div class="f-note">מתחם שומר שבת • מקבלים בעלי חיים • נגישות לנכים</div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('compact', scrollY > 60));
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const sibs = [...e.target.parentElement.children].filter(c => c.classList.contains('reveal'));
+      const idx = sibs.indexOf(e.target);
+      setTimeout(() => e.target.classList.add('in'), idx * 100);
+      obs.unobserve(e.target);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
