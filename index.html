@@ -207,9 +207,10 @@
 
     /* MOBILE */
     @media(max-width:768px){
-      nav{padding:14px 20px;}
+     nav{padding:14px 20px;}
       .nav-links{display:none;}
       .hero-content{padding:0 20px;}
+      .hero{align-items:center;padding-bottom:0;}
       .hero-title{font-size:clamp(2.5rem,10vw,4rem);}
       .strip{grid-template-columns:repeat(2,1fr);}
       .strip-item:nth-child(2){border-left:none;}
@@ -219,6 +220,7 @@
       .gallery{padding:70px 20px;}
       .mosaic{grid-template-columns:1fr 1fr;}
       .gp.w2{grid-column:span 2;}
+      .gp.t2{grid-row:span 1;}
       .rooms{padding:70px 20px;}
       .rooms-grid{grid-template-columns:1fr;}
       .outdoor{padding:70px 20px;}
