@@ -341,21 +341,7 @@
     <p class="eyebrow">תמונות</p>
     <h2>הציצו <span>אל המתחם</span></h2>
   </div>
-  <div class="mosaic">
-    <div class="gp t2"><img src="images/pool-night.jpg" alt="בריכה בלילה" /></div>
-    <div class="gp w2"><img src="images/garden-view.jpg" alt="נוף מהגג" /></div>
-    <div class="gp"><img src="images/room-pink1.jpg" alt="חדר שינה" /></div>
-    <div class="gp"><img src="images/jacuzzi-outdoor.jpg" alt="ג'קוזי חיצוני" /></div>
-    <div class="gp"><img src="images/garden-night.jpg" alt="חצר בערב" /></div>
-    <div class="gp t2"><img src="images/pool-flowers.jpg" alt="ליד הבריכה" /></div>
-    <div class="gp"><img src="images/bar.jpg" alt="הבר" /></div>
-    <div class="gp"><img src="images/snooker.jpg" alt="שולחן סנוקר" /></div>
-    <div class="gp w2"><img src="images/garden-seating.jpg" alt="פינת ישיבה" /></div>
-    <div class="gp"><img src="images/bbq.jpg" alt="פינת מנגל" /></div>
-    <div class="gp"><img src="images/living-room.jpg" alt="סלון" /></div>
-    <div class="gp"><img src="images/jacuzzi-night.jpg" alt="ג'קוזי לילה" /></div>
-    <div class="gp"><img src="images/indoor-jacuzzi.jpg" alt="ג'קוזי פנימי" /></div>
-  </div>
+  <div class="mosaic"> </div>
 </section>
 
 <!-- ROOMS -->
@@ -486,6 +472,19 @@
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  async function loadGallery() {
+  const res = await fetch('https://api.github.com/repos/yisraelmeirlifschitz-rgb/sol-banof-website/contents/Gallery');
+  const files = await res.json();
+  const imgs = files.filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f.name));
+  const mosaic = document.querySelector('.mosaic');
+  imgs.forEach((img, i) => {
+    const div = document.createElement('div');
+    div.className = 'gp' + (i === 0 ? ' t2' : i === 1 ? ' w2' : '');
+    div.innerHTML = `<img src="${img.download_url}" alt="תמונה מהמתחם" loading="lazy">`;
+    mosaic.appendChild(div);
+  });
+}
+loadGallery();
 </script>
 </body>
 </html>
