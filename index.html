@@ -239,7 +239,6 @@
     <li><a href="#about">על האחוזה</a></li>
     <li><a href="#amenities">מה כלול</a></li>
     <li><a href="#gallery">גלריה</a></li>
-    <li><a href="#rooms">חדרים</a></li>
     <li><a href="#contact" class="nav-phone">📞 055-4541494</a></li>
   </ul>
 </nav>
@@ -269,9 +268,7 @@
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-imgs reveal">
-    <img class="big" src="background: url('https://raw.githubusercontent.com/yisraelmeirlifschitz-rgb/sol-banof-website/main/Gallery/wkiquh23vipzzkg4qpr4.jpg') center/cover no-repeat;" alt="בריכת השחייה" />
-    <img class="small" src="https://raw.githubusercontent.com/yisraelmeirlifschitz-rgb/sol-banof-website/main/Gallery/e16pmwwtkca9up4pva2q.jpg" alt="נוף מהמרפסת" />
-    <img class="small" src="https://raw.githubusercontent.com/yisraelmeirlifschitz-rgb/sol-banof-website/main/Gallery/unseeui2i2p4xffoexze.jpg" alt="החצר בלילה" />
+  <img class="big" src="https://raw.githubusercontent.com/yisraelmeirlifschitz-rgb/sol-banof-website/main/Gallery/nrjf1b6i12pjcmoksnq2.jpg" alt="בריכת השחייה" />    <img class="small" src="https://raw.githubusercontent.com/yisraelmeirlifschitz-rgb/sol-banof-website/main/Gallery/unseeui2i2p4xffoexze.jpg" alt="החצר בלילה" />
   </div>
   <div class="reveal">
     <p class="eyebrow">ברוכים הבאים</p>
@@ -422,7 +419,7 @@
   <div class="f-copy">© 2025 אחוזת סול בנוף | שדות מיכה</div>
   <div class="f-note">מתחם שומר שבת • מקבלים בעלי חיים • נגישות לנכים</div>
   <div style="text-align:center; opacity:0.6;">
-    <div style="font-size:0.72rem; color:rgba(255,255,255,0.45); margin-bottom:6px; letter-spacing:0.06em;">נבנה ע"י</div>
+    <div style="font-size:0.72rem; color:rgba(255,255,255,0.45); margin-bottom:2px; letter-spacing:0.06em;">נבנה ע"י</div>
 <a href="https://simplysite.me" target="_blank">
   <img src="https://raw.githubusercontent.com/yisraelmeirlifschitz-rgb/Camp-Landau-website/main/SimplySite.png" alt="SimplySite" style="height:80px; opacity:0.7; filter:brightness(0) invert(1);" />
 </a>
@@ -448,11 +445,64 @@
   const files = await res.json();
   const imgs = files.filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f.name));
   const mosaic = document.querySelector('.mosaic');
+  
   imgs.forEach((img, i) => {
     const div = document.createElement('div');
     div.className = 'gp' + (i === 0 ? ' t2' : i === 1 ? ' w2' : '');
     div.innerHTML = `<img src="${img.download_url}" alt="תמונה מהמתחם" loading="lazy">`;
+    div.addEventListener('click', () => openLightbox(i));
     mosaic.appendChild(div);
+  });
+
+  // Lightbox
+  const lb = document.createElement('div');
+  lb.id = 'lb';
+  lb.style.cssText = `display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;align-items:center;justify-content:center;`;
+  lb.innerHTML = `
+    <button id="lb-close" style="position:absolute;top:20px;left:20px;background:none;border:none;color:white;font-size:2rem;cursor:pointer;">✕</button>
+    <button id="lb-prev" style="position:absolute;right:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);border:none;color:white;font-size:2rem;cursor:pointer;padding:10px 16px;border-radius:3px;">‹</button>
+    <img id="lb-img" style="max-height:90vh;max-width:90vw;object-fit:contain;border-radius:4px;user-select:none;" />
+    <button id="lb-next" style="position:absolute;left:20px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.15);border:none;color:white;font-size:2rem;cursor:pointer;padding:10px 16px;border-radius:3px;">›</button>
+  `;
+  document.body.appendChild(lb);
+
+  let current = 0;
+  const urls = imgs.map(i => i.download_url);
+
+  function openLightbox(i) {
+    current = i;
+    document.getElementById('lb-img').src = urls[current];
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lb.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function prev() { current = (current - 1 + urls.length) % urls.length; document.getElementById('lb-img').src = urls[current]; }
+  function next() { current = (current + 1) % urls.length; document.getElementById('lb-img').src = urls[current]; }
+
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  document.getElementById('lb-prev').addEventListener('click', prev);
+  document.getElementById('lb-next').addEventListener('click', next);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+
+  // מקלדת
+  document.addEventListener('keydown', e => {
+    if (lb.style.display === 'none') return;
+    if (e.key === 'ArrowRight') prev();
+    if (e.key === 'ArrowLeft') next();
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // Swipe בטלפון
+  let touchX = 0;
+  lb.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
+  lb.addEventListener('touchend', e => {
+    const diff = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
   });
 }
 loadGallery();
